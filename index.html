@@ -323,7 +323,7 @@
     </header>
     <section>
         <div class="guarantee">
-            <strong>Our Promise:</strong> With Empire Betting Tips, your success is our guarantee. Our experts analyze every fixture to deliver the most accurate predictions. Join us today and be part of the winning team!
+            <strong>Our Promise:</strong> With Empire Betting Tips, your success is our guarantee. Our experts analyze every fixture to deliver the most accurate predictions. Join us today and be part of a winning team!
         </div>
 
         <div class="plans-label">Subscription Plans</div>
@@ -350,27 +350,24 @@
                 </span>
             </li>
         </ul>
-
-        <div class="fixtures-label">Prediction For June 07 2025</div>
-        <div class="fixture-details">
-            <span class="fixture-number" id="fixturesToday">3</span>
-            <span>Total Odds</span>
-            <span class="fixture-odd">2.60</span>
-        </div>
-
+        <!-- Removed fixtures-label and fixture-details here -->
         <!-- Removed the Past Result link here -->
-
-        <div class="actions">
-            <a href="https://sambo7785.github.io/EMPIRE-TIP" class="action-link login" target="_blank" rel="noopener">Login</a>
-            <a href="https://paystack.com/pay/azohnqhgu-" class="action-link join" target="_blank" rel="noopener">Join</a>
-        </div>
+        <!-- Removed the first Login/Join here -->
     </section>
 
     <!-- Free Tips Pictures Section -->
     <section id="tips-section">
-        <h2>Tab on image</h2>
+        <!-- Removed the Get free Tips header here -->
         <button id="showTipsBtn">Get free Tips</button>
+        <div id="tapNote" style="display:none; margin:1em 0; color:#ffd700; font-weight:600;">Tap on the image</div>
         <div id="tipsImages"></div>
+        <div style="margin-top:1.5em; margin-bottom:1.5em; font-size:1.12em;">
+            <strong>Login or Sign up to get more Prediction.</strong>
+        </div>
+        <div class="actions" style="margin-bottom: 1.5em;">
+            <a href="https://sambo7785.github.io/EMPIRE-TIP" class="action-link login" target="_blank" rel="noopener">Login</a>
+            <a href="https://paystack.com/pay/azohnqhgu-" class="action-link join" target="_blank" rel="noopener">Sign up</a>
+        </div>
     </section>
 
     <!-- Lightbox Overlay for enlarged image view -->
@@ -392,6 +389,9 @@
         document.getElementById('showTipsBtn').addEventListener('click', function() {
             const container = document.getElementById('tipsImages');
             container.innerHTML = ''; // Clear previous content
+
+            // Show the note "Tap on the image"
+            document.getElementById('tapNote').style.display = 'block';
 
             tipImages.forEach(src => {
                 const img = document.createElement('img');
