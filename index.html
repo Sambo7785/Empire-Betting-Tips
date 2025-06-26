@@ -106,14 +106,12 @@
             font-weight: bold;
             color: #ffd700;
         }
-
         .expected-odd {
             font-size: 0.97em;
             color: #3dc46c;
             margin-left: 1em;
             font-weight: 500;
         }
-
         .fixtures-label {
             background: #ffd700;
             color: #23272e;
@@ -164,7 +162,6 @@
             background: #2ea65c;
             color: #fff;
         }
-
         .actions {
             display: flex;
             gap: 1.2em;
@@ -198,7 +195,94 @@
             color: #3dc46c;
             border: 2px solid #3dc46c;
         }
-
+        /* Free Tips Section Styles */
+        #tips-section {
+            background: #191c22;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(20, 20, 20, 0.3);
+            padding: 2em 1em;
+            max-width: 700px;
+            margin: 2em auto;
+            text-align: center;
+            border: 1px solid #23272e;
+        }
+        #tips-section h2 {
+            margin-top: 0;
+            font-size: 1.5em;
+            color: #ffd700;
+            margin-bottom: 1em;
+        }
+        #showTipsBtn {
+            padding: 0.5em 2em;
+            background: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-bottom: 1em;
+            margin-top: 0.5em;
+        }
+        #showTipsBtn:hover {
+            background: #388e3c;
+        }
+        #tipsImages {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 1.5em;
+        }
+        #tipsImages img {
+            max-width: 300px;
+            max-height: 300px;
+            border-radius: 10px;
+            border: 2px solid #ffd700;
+            object-fit: cover;
+            background: #fafafa;
+            padding: 5px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        #tipsImages img:hover {
+            transform: scale(1.06);
+            box-shadow: 0 4px 24px #ffd70055;
+            border-color: #fff;
+        }
+        /* Lightbox overlay */
+        #lightboxOverlay {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.8);
+            justify-content: center;
+            align-items: center;
+        }
+        #lightboxOverlay.active {
+            display: flex;
+        }
+        #lightboxOverlay img {
+            max-width: 90vw;
+            max-height: 90vh;
+            border-radius: 10px;
+            border: 4px solid #ffd700;
+            background: #222;
+        }
+        #lightboxOverlay .close-btn {
+            position: absolute;
+            top: 40px;
+            right: 60px;
+            font-size: 2.5rem;
+            color: #ffd700;
+            background: none;
+            border: none;
+            cursor: pointer;
+            z-index: 10001;
+        }
         @media (max-width: 768px) {
             section {
                 padding: 1.2rem;
@@ -211,6 +295,17 @@
             .header-image img, .image-placeholder {
                 width: 80px;
                 height: 80px;
+            }
+            #tips-section {
+                padding: 1em;
+            }
+            #tipsImages img {
+                max-width: 95vw;
+                max-height: 180px;
+            }
+            #lightboxOverlay .close-btn {
+                top: 10px;
+                right: 20px;
             }
         }
     </style>
@@ -228,7 +323,7 @@
     </header>
     <section>
         <div class="guarantee">
-            <strong>Our Promise:</strong> With Empire Betting Tips, your success is our guarantee. Our experts analyze every fixture to deliver the most accurate predictions. Join us today and be part of our winning community!
+            <strong>Our Promise:</strong> With Empire Betting Tips, your success is our guarantee. Our experts analyze every fixture to deliver the most accurate predictions. Join us today and be part of the winning team!
         </div>
 
         <div class="plans-label">Subscription Plans</div>
@@ -270,5 +365,72 @@
             <a href="https://paystack.com/pay/azohnqhgu-" class="action-link join" target="_blank" rel="noopener">Join</a>
         </div>
     </section>
+
+    <!-- Free Tips Pictures Section -->
+    <section id="tips-section">
+        <h2>Free Tips Pictures</h2>
+        <button id="showTipsBtn">Get free Tips</button>
+        <div id="tipsImages"></div>
+    </section>
+
+    <!-- Lightbox Overlay for enlarged image view -->
+    <div id="lightboxOverlay">
+        <button class="close-btn" aria-label="Close">&times;</button>
+        <img src="" alt="Large tip preview" id="lightboxImage">
+    </div>
+
+    <script>
+        // List the filenames of your tip images here.
+        // Place these images in an "images" folder in your project directory.
+        const tipImages = [
+            'images/tip1.jpg',
+            'images/tip2.jpg',
+            'images/tip3.jpg'
+            // Add more images as needed
+        ];
+
+        document.getElementById('showTipsBtn').addEventListener('click', function() {
+            const container = document.getElementById('tipsImages');
+            container.innerHTML = ''; // Clear previous content
+
+            tipImages.forEach(src => {
+                const img = document.createElement('img');
+                img.src = src;
+                img.alt = "Free Tip";
+                img.addEventListener('click', function() {
+                    openLightbox(src);
+                });
+                container.appendChild(img);
+            });
+        });
+
+        // Lightbox functionality
+        const lightboxOverlay = document.getElementById('lightboxOverlay');
+        const lightboxImage = document.getElementById('lightboxImage');
+        const closeBtn = document.querySelector('#lightboxOverlay .close-btn');
+
+        function openLightbox(src) {
+            lightboxImage.src = src;
+            lightboxOverlay.classList.add('active');
+        }
+
+        function closeLightbox() {
+            lightboxOverlay.classList.remove('active');
+            lightboxImage.src = '';
+        }
+
+        closeBtn.addEventListener('click', closeLightbox);
+        lightboxOverlay.addEventListener('click', function(e) {
+            // Only close if clicking on the overlay, not the image itself
+            if(e.target === lightboxOverlay) closeLightbox();
+        });
+
+        // Optional: Allow closing with Escape key
+        document.addEventListener('keydown', function(e) {
+            if(lightboxOverlay.classList.contains('active') && e.key === 'Escape') {
+                closeLightbox();
+            }
+        });
+    </script>
 </body>
 </html>
