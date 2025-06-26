@@ -212,7 +212,7 @@
             color: #ffd700;
             margin-bottom: 1em;
         }
-        #showTipsBtn {
+        #showFixturesBtn {
             padding: 0.5em 2em;
             background: #4caf50;
             color: #fff;
@@ -224,88 +224,87 @@
             margin-bottom: 1em;
             margin-top: 0.5em;
         }
-        #showTipsBtn:hover {
+        #showFixturesBtn:hover {
             background: #388e3c;
         }
-        #tipsImages {
+        #tapNote {
+            margin: 1em 0;
+            color: #ffd700;
+            font-weight: 600;
+        }
+        #fixtures {
             display: flex;
             flex-wrap: wrap;
-            gap: 20px;
+            gap: 18px;
             justify-content: center;
-            margin-top: 1.5em;
+            margin-top: 1.2em;
         }
-        #tipsImages img {
-            max-width: 300px;
-            max-height: 300px;
-            border-radius: 10px;
-            border: 2px solid #ffd700;
-            object-fit: cover;
-            background: #fafafa;
-            padding: 5px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        .fixture-btn {
+            margin: 0;
+            padding: 12px 24px;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.11em;
+            font-weight: 600;
+            box-shadow: 0 2px 8px #002bff22;
+            transition: background 0.2s, box-shadow 0.2s;
         }
-        #tipsImages img:hover {
-            transform: scale(1.06);
-            box-shadow: 0 4px 24px #ffd70055;
-            border-color: #fff;
+        .fixture-btn:hover {
+            background: #005bbf;
+            box-shadow: 0 4px 24px #007bff77;
         }
-        /* Lightbox overlay */
-        #lightboxOverlay {
+        /* Modal styles */
+        .modal {
             display: none;
             position: fixed;
             z-index: 9999;
-            top: 0; left: 0;
+            left: 0; top: 0;
             width: 100vw; height: 100vh;
-            background: rgba(0,0,0,0.8);
-            justify-content: center;
+            background-color: rgba(0,0,0,0.85);
             align-items: center;
+            justify-content: center;
         }
-        #lightboxOverlay.active {
+        .modal.active {
             display: flex;
         }
-        #lightboxOverlay img {
-            max-width: 90vw;
-            max-height: 90vh;
-            border-radius: 10px;
+        .modal-content {
+            max-width: 95vw;
+            max-height: 80vh;
+            border-radius: 12px;
             border: 4px solid #ffd700;
+            box-shadow: 0 4px 32px #000a;
             background: #222;
+            display: block;
         }
-        #lightboxOverlay .close-btn {
+        .close-modal-btn {
             position: absolute;
-            top: 40px;
-            right: 60px;
-            font-size: 2.5rem;
+            top: 30px; right: 50px;
             color: #ffd700;
+            font-size: 2.4rem;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 10000;
             background: none;
             border: none;
-            cursor: pointer;
-            z-index: 10001;
         }
         @media (max-width: 768px) {
             section {
                 padding: 1.2rem;
             }
-            .fixture-details {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 0.5rem;
-            }
             .header-image img, .image-placeholder {
                 width: 80px;
                 height: 80px;
             }
-            #tips-section {
-                padding: 1em;
+            .modal-content {
+                max-width: 98vw;
+                max-height: 60vh;
             }
-            #tipsImages img {
-                max-width: 95vw;
-                max-height: 180px;
-            }
-            #lightboxOverlay .close-btn {
-                top: 10px;
-                right: 20px;
+            .close-modal-btn {
+                top: 12px;
+                right: 18px;
             }
         }
     </style>
@@ -325,7 +324,6 @@
         <div class="guarantee">
             <strong>Our Promise:</strong> With Empire Betting Tips, your success is our guarantee. Our experts analyze every fixture to deliver the most accurate predictions. Join us today and be part of a winning team!
         </div>
-
         <div class="plans-label">Subscription Plans</div>
         <ul class="plans-list">
             <li>
@@ -350,17 +348,13 @@
                 </span>
             </li>
         </ul>
-        <!-- Removed fixtures-label and fixture-details here -->
-        <!-- Removed the Past Result link here -->
-        <!-- Removed the first Login/Join here -->
     </section>
 
-    <!-- Free Tips Pictures Section -->
+    <!-- Free Tips Fixtures Section -->
     <section id="tips-section">
-        <!-- Removed the Get free Tips header here -->
-        <button id="showTipsBtn">Get free Tips</button>
-        <div id="tapNote" style="display:none; margin:1em 0; color:#ffd700; font-weight:600;">Tap on the image</div>
-        <div id="tipsImages"></div>
+        <button id="showFixturesBtn">Get free Tips</button>
+        <div id="tapNote" style="display:none;">Tap on a Fixture</div>
+        <div id="fixtures"></div>
         <div style="margin-top:1.5em; margin-bottom:1.5em; font-size:1.12em;">
             <strong>Login or Sign up to get more Prediction.</strong>
         </div>
@@ -370,64 +364,62 @@
         </div>
     </section>
 
-    <!-- Lightbox Overlay for enlarged image view -->
-    <div id="lightboxOverlay">
-        <button class="close-btn" aria-label="Close">&times;</button>
-        <img src="" alt="Large tip preview" id="lightboxImage">
+    <!-- Modal Popup for enlarged image -->
+    <div id="fixtureModal" class="modal">
+        <button class="close-modal-btn" id="closeModalBtn" aria-label="Close">&times;</button>
+        <img src="" alt="Fixture image" id="modalImg" class="modal-content">
     </div>
 
     <script>
-        // List the filenames of your tip images here.
-        // Place these images in an "images" folder in your project directory.
+        // Use the same images as in your original free tips image list:
         const tipImages = [
             'AddText_06-26-12.57.11.png',
             'AddText_06-26-12.59.26.png'
-            // Add more images as needed
+            // Add more images here as needed
         ];
 
-        document.getElementById('showTipsBtn').addEventListener('click', function() {
-            const container = document.getElementById('tipsImages');
-            container.innerHTML = ''; // Clear previous content
-
-            // Show the note "Tap on the image"
+        document.getElementById('showFixturesBtn').addEventListener('click', function() {
+            const container = document.getElementById('fixtures');
+            container.innerHTML = '';
             document.getElementById('tapNote').style.display = 'block';
 
-            tipImages.forEach(src => {
-                const img = document.createElement('img');
-                img.src = src;
-                img.alt = "Free Tip";
-                img.addEventListener('click', function() {
-                    openLightbox(src);
-                });
-                container.appendChild(img);
+            tipImages.forEach((src, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'fixture-btn';
+                btn.textContent = `Fixture ${idx + 1}`;
+                btn.onclick = () => openModal(src);
+                container.appendChild(btn);
             });
         });
 
-        // Lightbox functionality
-        const lightboxOverlay = document.getElementById('lightboxOverlay');
-        const lightboxImage = document.getElementById('lightboxImage');
-        const closeBtn = document.querySelector('#lightboxOverlay .close-btn');
+        // Modal logic
+        const modal = document.getElementById('fixtureModal');
+        const modalImg = document.getElementById('modalImg');
+        const closeModalBtn = document.getElementById('closeModalBtn');
 
-        function openLightbox(src) {
-            lightboxImage.src = src;
-            lightboxOverlay.classList.add('active');
+        function openModal(imgSrc) {
+            modal.style.display = 'flex';
+            modal.classList.add('active');
+            modalImg.src = imgSrc;
         }
 
-        function closeLightbox() {
-            lightboxOverlay.classList.remove('active');
-            lightboxImage.src = '';
+        function closeModal() {
+            modal.style.display = 'none';
+            modal.classList.remove('active');
+            modalImg.src = '';
         }
 
-        closeBtn.addEventListener('click', closeLightbox);
-        lightboxOverlay.addEventListener('click', function(e) {
-            // Only close if clicking on the overlay, not the image itself
-            if(e.target === lightboxOverlay) closeLightbox();
-        });
-
+        closeModalBtn.onclick = closeModal;
+        // Close modal when clicking outside image
+        modal.onclick = function(event) {
+            if(event.target === modal) {
+                closeModal();
+            }
+        };
         // Optional: Allow closing with Escape key
         document.addEventListener('keydown', function(e) {
-            if(lightboxOverlay.classList.contains('active') && e.key === 'Escape') {
-                closeLightbox();
+            if(modal.classList.contains('active') && e.key === 'Escape') {
+                closeModal();
             }
         });
     </script>
