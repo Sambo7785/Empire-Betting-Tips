@@ -290,6 +290,59 @@
             background: none;
             border: none;
         }
+        /* Registration Guide Modal styles */
+        #signupModal {
+            display: none;
+            position: fixed;
+            z-index: 10001;
+            left: 0; top: 0;
+            width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.7);
+            align-items: center;
+            justify-content: center;
+        }
+        #signupModal .signup-modal-content {
+            background: #fff;
+            color: #181d22;
+            margin: 5% auto;
+            padding: 30px 24px 24px 24px;
+            border-radius: 10px;
+            width: 92%;
+            max-width: 420px;
+            position: relative;
+            box-shadow: 0 4px 32px #000a;
+        }
+        #signupModal h3 {
+            margin-top: 0;
+            font-size: 1.38rem;
+            color: #2d8cff;
+        }
+        #signupModal ol {
+            text-align: left;
+            margin: 0 0 16px 0;
+            padding-left: 1.2em;
+        }
+        #signupModal a.signup-proceed {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: #2d8cff;
+            color: #fff;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.08em;
+        }
+        #signupModal button.close-signup-modal-btn {
+            position: absolute;
+            top: 10px;
+            right: 14px;
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            color: #2d8cff;
+            cursor: pointer;
+        }
         @media (max-width: 768px) {
             section {
                 padding: 1.2rem;
@@ -305,6 +358,9 @@
             .close-modal-btn {
                 top: 12px;
                 right: 18px;
+            }
+            #signupModal .signup-modal-content {
+                padding: 20px 8px 16px 8px;
             }
         }
     </style>
@@ -322,7 +378,7 @@
     </header>
     <section>
         <div class="guarantee">
-            <strong>Our Promise:</strong> With Empire Betting Tips, your success is our guarantee. Our experts analyze every fixture to deliver the most accurate predictions. Join us today and be part of a winning team!
+            <strong>Our Promise:</strong> With Empire Betting Tips, your success is our guarantee. Our experts analyze every fixture to deliver the most accurate predictions. Join us today and be on the winning side!
         </div>
         <div class="plans-label">Subscription Plans</div>
         <ul class="plans-list">
@@ -360,7 +416,7 @@
         </div>
         <div class="actions" style="margin-bottom: 1.5em;">
             <a href="https://sambo7785.github.io/EMPIRE-TIP" class="action-link login" target="_blank" rel="noopener">Login</a>
-            <a href="https://paystack.com/pay/azohnqhgu-" class="action-link join" target="_blank" rel="noopener">Sign up</a>
+            <a href="javascript:void(0);" class="action-link join" id="openSignupModal">Sign up</a>
         </div>
     </section>
 
@@ -370,6 +426,22 @@
         <img src="" alt="Fixture image" id="modalImg" class="modal-content">
     </div>
 
+    <!-- Registration Guide Modal -->
+    <div id="signupModal">
+      <div class="signup-modal-content">
+        <button class="close-signup-modal-btn" onclick="document.getElementById('signupModal').style.display='none';" aria-label="Close">&times;</button>
+        <h3>Registration Guide</h3>
+        <ol>
+          <li>Enter your details and click "Pay Now".</li>
+          <li>Choose "Pay with Transfer" and complete your payment.</li>
+          <li>Return to the app or website to continue. You’ll need to refill your details, go through face capture, and click "Submit".</li>
+          <li>Wait for confirmation and verify you are not a robot to complete your registration.</li>
+          <li>This process ensures your registration is secure and your access is guaranteed.</li>
+          <li>For any registration or payment issues, please contact our support team for prompt resolution.</li>
+        </ol>
+        <a href="https://paystack.com/pay/azohnqhgu-" class="signup-proceed" target="_blank" rel="noopener">Proceed to Sign Up</a>
+      </div>
+    </div>
     <script>
         // Use the same images as in your original free tips image list:
         const tipImages = [
@@ -422,6 +494,24 @@
                 closeModal();
             }
         });
+
+        // Registration modal logic for Sign up
+        document.getElementById('openSignupModal').onclick = function() {
+            document.getElementById('signupModal').style.display = 'flex';
+        };
+        // Allow closing Sign Up modal with Escape key as well
+        document.addEventListener('keydown', function(e) {
+            const signupModal = document.getElementById('signupModal');
+            if(signupModal.style.display === 'flex' && e.key === 'Escape') {
+                signupModal.style.display = 'none';
+            }
+        });
+        // Allow closing by clicking outside modal content
+        document.getElementById('signupModal').onclick = function(event) {
+            if(event.target === this) {
+                this.style.display = 'none';
+            }
+        };
     </script>
 </body>
 </html>
