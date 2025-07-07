@@ -125,70 +125,71 @@
             background: #388e3c;
         }
 
-        /* Redesigned Login and Sign Up Buttons */
-        .actions {
+        /* Pill-Style Login and Sign Up Buttons with Emoji icons */
+        .actions-pill {
             display: flex;
-            gap: 1.5em;
+            gap: 1.2em;
             justify-content: center;
             margin-top: 2.5rem;
+            margin-bottom: 1.5em;
         }
-        .action-link {
+        .pill-btn {
             display: flex;
             align-items: center;
             gap: 0.7em;
-            text-decoration: none;
-            padding: 0.85em 2.8em;
-            border-radius: 40px;
+            padding: 0.85em 2.2em;
+            border-radius: 999px;
             font-weight: 700;
-            font-size: 1.2rem;
+            font-size: 1.14rem;
             border: none;
             outline: none;
             cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 4px 20px #0002;
-            letter-spacing: 1px;
+            box-shadow: 0 5px 18px #0002, 0 1.5px 4px #fff1 inset;
+            letter-spacing: 0.5px;
+            text-decoration: none;
             transition: 
                 background 0.17s, 
                 color 0.17s, 
-                box-shadow 0.15s, 
+                box-shadow 0.16s, 
                 transform 0.13s;
+            user-select: none;
         }
-        .action-link.login {
-            background: linear-gradient(90deg, #23272e 70%, #ffd700 100%);
-            color: #ffd700;
-            border: 2px solid #ffd700;
-        }
-        .action-link.login:hover, .action-link.login:focus {
-            background: linear-gradient(90deg, #ffd700 45%, #23272e 100%);
-            color: #23272e;
-            box-shadow: 0 8px 28px #ffd70033;
-            transform: translateY(-2px) scale(1.04);
-        }
-        .action-link.join {
-            background: linear-gradient(90deg, #3dc46c 60%, #16281d 100%);
-            color: #fff;
-            border: 2px solid #3dc46c;
-        }
-        .action-link.join:hover, .action-link.join:focus {
-            background: linear-gradient(90deg, #16281d 40%, #3dc46c 100%);
-            color: #3dc46c;
-            box-shadow: 0 8px 28px #3dc46c33;
-            transform: translateY(-2px) scale(1.04);
-        }
-        .action-link .icon {
-            font-size: 1.3em;
+        .pill-btn .pill-icon {
+            font-size: 1.35em;
+            line-height: 1;
             display: flex;
+            align-items: center;
+        }
+        .pill-btn.login {
+            background: linear-gradient(90deg, #ffd700 0%, #ffb800 100%);
+            color: #222;
+        }
+        .pill-btn.signup {
+            background: linear-gradient(90deg, #5dbe74 0%, #2d8cff 100%);
+            color: #fff;
+        }
+        .pill-btn.login:hover, .pill-btn.login:focus {
+            background: linear-gradient(90deg, #ffb800 0%, #ffd700 100%);
+            color: #181d22;
+            box-shadow: 0 8px 28px #ffd70055;
+            transform: translateY(-2px) scale(1.035);
+        }
+        .pill-btn.signup:hover, .pill-btn.signup:focus {
+            background: linear-gradient(90deg, #2d8cff 0%, #5dbe74 100%);
+            color: #fff;
+            box-shadow: 0 8px 28px #2d8cff55;
+            transform: translateY(-2px) scale(1.035);
         }
         @media (max-width: 768px) {
-            .actions {
+            .actions-pill {
                 flex-direction: column;
                 gap: 1em;
                 margin-top: 1.7rem;
             }
-            .action-link {
-                padding: 0.95em 1.5em;
-                font-size: 1.13rem;
+            .pill-btn {
+                padding: 1em 1.3em;
+                font-size: 1.07rem;
+                justify-content: center;
             }
         }
         /* End of redesigned buttons */
@@ -377,27 +378,26 @@
         <div style="margin-top:1.5em; margin-bottom:1.5em; font-size:1.15em;">
             <strong>Login or Sign up and get started.</strong>
         </div>
-        <div class="actions" style="margin-bottom: 1.5em;">
-            <a href="https://sambo7785.github.io/EMPIRE-TIP" class="action-link login" target="_blank" rel="noopener">
-                <span class="icon" aria-hidden="true">&#128274;</span>
-                Login
+        <div class="actions-pill">
+            <a href="https://sambo7785.github.io/EMPIRE-TIP" class="pill-btn login" target="_blank" rel="noopener">
+                <span class="pill-icon" aria-hidden="true">🗝️</span>
+                <span>Login</span>
             </a>
-            <a href="javascript:void(0);" class="action-link join" id="openSignupModal">
-                <span class="icon" aria-hidden="true">&#10133;</span>
-                Sign up
+            <a href="javascript:void(0);" class="pill-btn signup" id="openSignupModal">
+                <span class="pill-icon" aria-hidden="true">✨</span>
+                <span>Sign up</span>
             </a>
         </div>
     </section>
 
-    <!-- Modal Popup for Free Prediction Link (now with iframe) -->
+    <!-- Modal Popup for Free Prediction Link -->
     <div id="freePredictionModal" class="modal-fp">
         <button class="close-modal-fp-btn" id="closeFreePredictionModalBtn" aria-label="Close">&times;</button>
         <div class="modal-fp-content">
             <h2>Your Free Prediction</h2>
             <iframe class="prediction-iframe" id="predictionIframe" src="" title="Free Prediction"></iframe>
             <p id="predictionFallback" style="color:#f3f6fb; margin-bottom:0.3em; font-size:1em;">
-                Interact with the content above. If it does not load, 
-                <a id="predictionFallbackLink" href="#" style="color:#ffd700; text-decoration:underline;" target="_blank">open in new tab</a>.
+                Interact with the content above.
             </p>
         </div>
     </div>
@@ -419,29 +419,20 @@
       </div>
     </div>
     <script>
-        // This variable holds the current link for the free prediction.
-        // Update this variable to change the prediction link everywhere (iframe and fallback)
         let currentPredictionLink = "https://www.footballtipspredictions.com/football-predictions-tips";
-        // Example: let currentPredictionLink = "https://example.com"; // change this as needed
-
-        // Free Prediction Modal Logic
         const freePredictionModal = document.getElementById('freePredictionModal');
         const showFreePredictionBtn = document.getElementById('showFreePredictionBtn');
         const closeFreePredictionModalBtn = document.getElementById('closeFreePredictionModalBtn');
         const predictionIframe = document.getElementById('predictionIframe');
-        const predictionFallbackLink = document.getElementById('predictionFallbackLink');
 
         showFreePredictionBtn.onclick = function() {
-            // Always set the iframe and fallback link when opening
             predictionIframe.src = currentPredictionLink;
-            predictionFallbackLink.href = currentPredictionLink;
             freePredictionModal.classList.add('active');
         }
         closeFreePredictionModalBtn.onclick = function() {
             freePredictionModal.classList.remove('active');
-            predictionIframe.src = ""; // Optionally clear to stop loading
+            predictionIframe.src = "";
         }
-        // Optional: Allow closing with Escape key and clicking outside
         document.addEventListener('keydown', function(e) {
             if(freePredictionModal.classList.contains('active') && e.key === 'Escape') {
                 freePredictionModal.classList.remove('active');
@@ -455,7 +446,6 @@
             }
         };
 
-        // Registration modal logic for Sign up
         document.getElementById('openSignupModal').onclick = function() {
             document.getElementById('signupModal').style.display = 'flex';
         };
@@ -470,8 +460,6 @@
                 this.style.display = 'none';
             }
         };
-
-        // Example: you can update currentPredictionLink dynamically (from API, timer, etc.)
         // setInterval(() => { currentPredictionLink = "https://example.com?rand=" + Math.random(); }, 10000);
     </script>
 </body>
